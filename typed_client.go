@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/michimani/gotwi/internal/util"
-	"github.com/michimani/gotwi/resources"
+	"github.com/mellowdrifter/gotwi/internal/util"
+	"github.com/mellowdrifter/gotwi/resources"
 )
 
 type TypedClient[T util.Response] struct {

@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/michimani/gotwi"
-	"github.com/michimani/gotwi/internal/util"
+	"github.com/mellowdrifter/gotwi"
+	"github.com/mellowdrifter/gotwi/internal/util"
 	"github.com/stretchr/testify/assert"
 )
 

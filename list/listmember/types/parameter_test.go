@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/michimani/gotwi/fields"
-	"github.com/michimani/gotwi/list/listmember/types"
+	"github.com/mellowdrifter/gotwi/fields"
+	"github.com/mellowdrifter/gotwi/list/listmember/types"
 	"github.com/stretchr/testify/assert"
 )
 

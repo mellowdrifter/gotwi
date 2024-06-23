@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/michimani/gotwi/fields"
-	"github.com/michimani/gotwi/tweet/timeline/types"
+	"github.com/mellowdrifter/gotwi/fields"
+	"github.com/mellowdrifter/gotwi/tweet/timeline/types"
 	"github.com/stretchr/testify/assert"
 )
 

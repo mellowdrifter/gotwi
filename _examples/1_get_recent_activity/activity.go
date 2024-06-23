@@ -4,12 +4,12 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/michimani/gotwi"
-	"github.com/michimani/gotwi/fields"
-	"github.com/michimani/gotwi/tweet/searchtweet"
-	sttypes "github.com/michimani/gotwi/tweet/searchtweet/types"
-	"github.com/michimani/gotwi/user/follow"
-	ftypes "github.com/michimani/gotwi/user/follow/types"
+	"github.com/mellowdrifter/gotwi"
+	"github.com/mellowdrifter/gotwi/fields"
+	"github.com/mellowdrifter/gotwi/tweet/searchtweet"
+	sttypes "github.com/mellowdrifter/gotwi/tweet/searchtweet/types"
+	"github.com/mellowdrifter/gotwi/user/follow"
+	ftypes "github.com/mellowdrifter/gotwi/user/follow/types"
 )
 
 type twitterUser struct {
