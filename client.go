@@ -8,18 +8,12 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 	"time"
 
-	"github.com/michimani/gotwi/internal/gotwierrors"
-	"github.com/michimani/gotwi/internal/util"
-	"github.com/michimani/gotwi/resources"
-)
-
-const (
-	APIKeyEnvName       = "GOTWI_API_KEY"
-	APIKeySecretEnvName = "GOTWI_API_KEY_SECRET"
+	"github.com/mellowdrifter/gotwi/internal/gotwierrors"
+	"github.com/mellowdrifter/gotwi/internal/util"
+	"github.com/mellowdrifter/gotwi/resources"
 )
 
 type AuthenticationMethod string
@@ -38,6 +32,8 @@ type NewClientInput struct {
 	AuthenticationMethod AuthenticationMethod
 	OAuthToken           string
 	OAuthTokenSecret     string
+	APIKey               string
+	APISecret            string
 	Debug                bool
 }
 
@@ -53,6 +49,8 @@ type IClient interface {
 	AuthenticationMethod() AuthenticationMethod
 	OAuthToken() string
 	OAuthConsumerKey() string
+	APIKey() string
+	APISecret() string
 	SigningKey() string
 }
 
@@ -62,6 +60,8 @@ type Client struct {
 	accessToken          string
 	oauthToken           string
 	oauthConsumerKey     string
+	apiKey               string
+	apiSecret            string
 	signingKey           string
 	debug                bool
 }
@@ -80,11 +80,11 @@ var defaultHTTPClient = &http.Client{
 
 func NewClient(in *NewClientInput) (*Client, error) {
 	if in == nil {
-		return nil, fmt.Errorf("NewClientInput is nil.")
+		return nil, fmt.Errorf("NewClientInput is nil")
 	}
 
 	if !in.AuthenticationMethod.Valid() {
-		return nil, fmt.Errorf("AuthenticationMethod is invalid.")
+		return nil, fmt.Errorf("AuthenticationMethod is invalid")
 	}
 
 	c := Client{
@@ -97,7 +97,7 @@ func NewClient(in *NewClientInput) (*Client, error) {
 		c.Client = in.HTTPClient
 	}
 
-	if err := c.authorize(in.OAuthToken, in.OAuthTokenSecret); err != nil {
+	if err := c.authorize(in.OAuthToken, in.OAuthTokenSecret, in.APIKey, in.APISecret); err != nil {
 		return nil, err
 	}
 
@@ -106,11 +106,11 @@ func NewClient(in *NewClientInput) (*Client, error) {
 
 func NewClientWithAccessToken(in *NewClientWithAccessTokenInput) (*Client, error) {
 	if in == nil {
-		return nil, fmt.Errorf("NewClientWithAccessTokenInput is nil.")
+		return nil, fmt.Errorf("NewClientWithAccessTokenInput is nil")
 	}
 
 	if in.AccessToken == "" {
-		return nil, fmt.Errorf("AccessToken is empty.")
+		return nil, fmt.Errorf("AccessToken is empty")
 	}
 
 	c := Client{
@@ -126,18 +126,13 @@ func NewClientWithAccessToken(in *NewClientWithAccessTokenInput) (*Client, error
 	return &c, nil
 }
 
-func (c *Client) authorize(oauthToken, oauthTokenSecret string) error {
-	apiKey := os.Getenv(APIKeyEnvName)
-	apiKeySecret := os.Getenv(APIKeySecretEnvName)
-	if apiKey == "" || apiKeySecret == "" {
-		return fmt.Errorf("env '%s' and '%s' is required.", APIKeyEnvName, APIKeySecretEnvName)
-	}
+func (c *Client) authorize(oauthToken, oauthTokenSecret, apiKey, apiKeySecret string) error {
 	c.oauthConsumerKey = apiKey
 
 	switch c.AuthenticationMethod() {
 	case AuthenMethodOAuth1UserContext:
 		if oauthToken == "" || oauthTokenSecret == "" {
-			return fmt.Errorf("OAuthToken and OAuthTokenSecret is required for using %s.", AuthenMethodOAuth1UserContext)
+			return fmt.Errorf("OAuthToken and OAuthTokenSecret is required for using %s", AuthenMethodOAuth1UserContext)
 		}
 
 		c.oauthToken = oauthToken
@@ -195,6 +190,13 @@ func (c *Client) OAuthConsumerKey() string {
 }
 func (c *Client) SigningKey() string {
 	return c.signingKey
+}
+func (c *Client) APIKey() string {
+	return c.apiKey
+}
+
+func (c *Client) APISecret() string {
+	return c.apiSecret
 }
 
 func (c *Client) SetAccessToken(v string) {
