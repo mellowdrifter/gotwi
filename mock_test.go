@@ -66,6 +66,8 @@ type MockGotwiClient struct {
 	MockOAuthToken           func() string
 	MockOAuthConsumerKey     func() string
 	MockSigningKey           func() string
+	MockAPIKey               func() string
+	MockAPISecret            func() string
 }
 
 func (m *MockGotwiClient) Exec(req *http.Request, i util.Response) (*resources.Non2XXError, error) {

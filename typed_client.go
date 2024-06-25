@@ -15,6 +15,8 @@ type TypedClient[T util.Response] struct {
 	oauthToken           string
 	oauthConsumerKey     string
 	signingKey           string
+	apiKey               string
+	apiSecret            string
 }
 
 func NewTypedClient[T util.Response](c *Client) *TypedClient[T] {
@@ -76,6 +78,14 @@ func (c *TypedClient[T]) OAuthConsumerKey() string {
 }
 func (c *TypedClient[T]) SigningKey() string {
 	return c.signingKey
+}
+
+func (c *TypedClient[T]) APIKey() string {
+	return c.apiKey
+}
+
+func (c *TypedClient[T]) APISecret() string {
+	return c.apiSecret
 }
 
 func (c *TypedClient[T]) CallStreamAPI(ctx context.Context, endpoint, method string, p util.Parameters) (*StreamClient[T], error) {
