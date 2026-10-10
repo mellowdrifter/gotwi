@@ -1,5 +1,8 @@
-gotwi
-===
+# gotwi
+
+> [!WARNING]
+> **REPOSITORY ARCHIVED**
+> This repository is archived and no longer maintained. It was a temporary fork of [michimani/gotwi](https://github.com/michimani/gotwi) used for Twitter API v2 integration. Twitter/X posting in the BGP infrastructure has been replaced by a lightweight, direct implementation in [`bgp_platform`](https://github.com/mellowdrifter/bgp_platform) using [`oauth1`](https://github.com/dghubble/oauth1).
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/mellowdrifter/gotwi.svg)](https://pkg.go.dev/github.com/mellowdrifter/gotwi)
 [![Twitter API v2](https://img.shields.io/endpoint?url=https%3A%2F%2Ftwbadges.glitch.me%2Fbadges%2Fv2)](https://developer.twitter.com/en/docs/twitter-api)
